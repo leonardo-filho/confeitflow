@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Select } from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, ArrowRight, Check, Loader2, Plus, Minus } from 'lucide-react'
 import Link from 'next/link'
@@ -273,8 +272,8 @@ export default function NovoPedidoPage() {
                       type="button"
                       onClick={() => setSelectedClienteId(c.id)}
                       className={`w-full text-left px-3 py-2 rounded-md text-sm transition-colors ${selectedClienteId === c.id
-                          ? 'bg-primary text-primary-foreground'
-                          : 'hover:bg-muted'
+                        ? 'bg-primary text-primary-foreground'
+                        : 'hover:bg-muted'
                         }`}
                     >
                       <span className="font-medium">
@@ -468,15 +467,16 @@ export default function NovoPedidoPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="tipoEntrega">Tipo de entrega</Label>
-                <Select
+                <select
                   id="tipoEntrega"
                   value={tipoEntrega}
                   onChange={(e) => setTipoEntrega(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <option value="RETIRADA">Retirada</option>
                   <option value="ENTREGA">Entrega (endereço)</option>
                   <option value="ENVIO">Envio (Correios/transportadora)</option>
-                </Select>
+                </select>
               </div>
 
               {tipoEntrega !== 'RETIRADA' && (
@@ -578,10 +578,11 @@ export default function NovoPedidoPage() {
 
               <div className="space-y-2">
                 <Label htmlFor="formaPagamento">Forma de pagamento</Label>
-                <Select
+                <select
                   id="formaPagamento"
                   value={formaPagamento}
                   onChange={(e) => setFormaPagamento(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <option value="">Selecione...</option>
                   <option value="PIX">PIX</option>
@@ -589,20 +590,21 @@ export default function NovoPedidoPage() {
                   <option value="CARTAO_CREDITO">Cartão de crédito</option>
                   <option value="CARTAO_DEBITO">Cartão de débito</option>
                   <option value="TRANSFERENCIA">Transferência bancária</option>
-                </Select>
+                </select>
               </div>
 
               <div className="space-y-2">
                 <Label htmlFor="statusPagamento">Status do pagamento</Label>
-                <Select
+                <select
                   id="statusPagamento"
                   value={statusPagamento}
                   onChange={(e) => setStatusPagamento(e.target.value)}
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   <option value="PENDENTE">Pendente</option>
                   <option value="SINAL_PAGO">Sinal pago</option>
                   <option value="PAGO">Pago</option>
-                </Select>
+                </select>
               </div>
 
               <div className="space-y-2">

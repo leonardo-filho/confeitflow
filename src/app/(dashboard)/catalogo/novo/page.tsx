@@ -7,7 +7,6 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '@/components/ui/textarea'
-import { Select } from '@/components/ui/select'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { ArrowLeft, Loader2 } from 'lucide-react'
 import Link from 'next/link'
@@ -27,7 +26,7 @@ export default function NovoProdutoPage() {
     fetch('/api/categorias')
       .then((r) => r.json())
       .then(setCategorias)
-      .catch(() => {})
+      .catch(() => { })
   }, [])
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
@@ -130,14 +129,18 @@ export default function NovoProdutoPage() {
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="categoriaId">Categoria</Label>
-                <Select id="categoriaId" name="categoriaId">
+                <select
+                  id="categoriaId"
+                  name="categoriaId"
+                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                >
                   <option value="">Sem categoria</option>
                   {categorias.map((c) => (
                     <option key={c.id} value={c.id}>
                       {c.nome}
                     </option>
                   ))}
-                </Select>
+                </select>
               </div>
               <div className="space-y-2">
                 <Label htmlFor="tempoProducao">
@@ -170,14 +173,12 @@ export default function NovoProdutoPage() {
                 aria-checked={ativo}
                 aria-label="Produto ativo"
                 onClick={() => setAtivo(!ativo)}
-                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-                  ativo ? 'bg-primary' : 'bg-muted'
-                }`}
+                className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${ativo ? 'bg-primary' : 'bg-muted'
+                  }`}
               >
                 <span
-                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-                    ativo ? 'translate-x-6' : 'translate-x-1'
-                  }`}
+                  className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${ativo ? 'translate-x-6' : 'translate-x-1'
+                    }`}
                 />
               </button>
               <Label htmlFor="ativo" className="cursor-pointer">
