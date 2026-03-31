@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StatusBadge } from '@/components/ui/status-badge'
+import { UpdatePedidoButton } from '@/components/pedidos/UpdatePedidoButton'
 import {
   formatDate,
   formatCurrency,
@@ -104,13 +105,13 @@ export default async function PedidoDetailPage({
       {/* Progress bar */}
       {pedido.status !== 'CANCELADO' && (
         <div className="rounded-lg border bg-card p-4">
-          <div className="flex justify-between mb-2">
+          <div className="flex justify-between mb-2 hidden md:flex">
             {STATUS_FLOW.map((s, i) => (
               <div
                 key={s}
                 className={`text-xs font-medium ${i <= currentStatusIndex
-                    ? 'text-primary'
-                    : 'text-muted-foreground'
+                  ? 'text-primary'
+                  : 'text-muted-foreground'
                   }`}
               >
                 {statusLabel(s).split(' ')[0]}
@@ -123,9 +124,21 @@ export default async function PedidoDetailPage({
               style={{ width: `${pedido.progresso}%` }}
             />
           </div>
-          <p className="text-xs text-muted-foreground mt-1">
-            {pedido.progresso}% concluído
-          </p>
+          <div className="flex justify-between items-center mt-3">
+            <p className="text-sm font-medium">
+              {pedido.progresso}% concluído
+            </p>
+            <UpdatePedidoButton
+              pedido={{
+                id: pedido.id,
+                numero: pedido.numero,
+                status: pedido.status,
+                progresso: pedido.progresso,
+              }}
+              variant="secondary"
+              size="sm"
+            />
+          </div>
         </div>
       )}
 

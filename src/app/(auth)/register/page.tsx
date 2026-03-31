@@ -1,7 +1,6 @@
 import { redirect } from 'next/navigation'
 import { signIn } from '@/lib/auth'
 import Link from 'next/link'
-import bcrypt from 'bcryptjs'
 import { prisma } from '@/lib/prisma'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -27,13 +26,11 @@ export default function RegisterPage() {
       throw new Error('E-mail já cadastrado')
     }
 
-    const hashedPassword = await bcrypt.hash(password, 12)
-
     const user = await prisma.user.create({
       data: {
         name,
         email,
-        password: hashedPassword,
+        password: password,
         atelieName: atelieName || null,
       },
     })

@@ -3,6 +3,7 @@ import { formatCurrency, deliveryUrgency } from '@/lib/utils'
 import { cn } from '@/lib/utils'
 import { Clock, AlertTriangle } from 'lucide-react'
 import { differenceInCalendarDays } from 'date-fns'
+import { UpdatePedidoButton } from './UpdatePedidoButton'
 
 interface KanbanCardProps {
   pedido: {
@@ -88,6 +89,18 @@ export function KanbanCard({ pedido, isDragging }: KanbanCardProps) {
             >
               {deliveryLabel}
             </span>
+            <UpdatePedidoButton
+              pedido={{
+                id: pedido.id,
+                numero: pedido.numero,
+                status: pedido.status,
+                progresso: pedido.progresso,
+              }}
+              variant="ghost"
+              size="icon"
+              className="h-6 w-6 ml-1 opacity-50 hover:opacity-100 transition-opacity"
+              showText={false}
+            />
           </div>
         </div>
 

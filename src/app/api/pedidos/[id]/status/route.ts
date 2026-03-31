@@ -31,19 +31,26 @@ export async function PATCH(
   }
 
   const body = await request.json()
-  const { status } = body
+  const { status, progresso } = body
 
   if (!VALID_STATUSES.includes(status)) {
     return Response.json({ error: 'Status inválido' }, { status: 400 })
   }
 
-  const progresso = progressoParaStatus(status)
+  // Se progresso foi passado, garante que seja um numero válido entre 0 e 100
+  // Se não foi passado, ou se for algo inválido, usa a regra automática
+  let finalProgresso: number
+  if (typeof progresso === 'number' && progresso >= 0 && progresso <= 100) {
+    finalProgresso = Math.round(progresso)
+  } else {
+    finalProgresso = progressoParaStatus(status)
+  }
 
   const pedido = await prisma.pedido.update({
     where: { id },
     data: {
       status,
-      progresso,
+      progresso: finalProgresso,
       historico: {
         create: {
           acao: `Status atualizado para ${statusLabel(status)}`,
