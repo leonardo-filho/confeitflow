@@ -1,7 +1,6 @@
 import { PrismaClient } from '@prisma/client'
 import { PrismaPg } from '@prisma/adapter-pg'
 import { Pool } from 'pg'
-import bcrypt from 'bcryptjs'
 
 const connectionString = process.env.DATABASE_URL!
 const pool = new Pool({ connectionString })
@@ -11,15 +10,15 @@ const prisma = new PrismaClient({ adapter })
 async function main() {
   console.log('Iniciando seed...')
 
-  const hashedPassword = await bcrypt.hash('senha123', 12)
-
   const user = await prisma.user.upsert({
     where: { email: 'demo@confeitflow.com' },
-    update: {},
+    update: {
+      password: 'senha123',
+    },
     create: {
       name: 'Maria Doceira',
       email: 'demo@confeitflow.com',
-      password: hashedPassword,
+      password: 'senha123',
       atelieName: 'Ateliê da Maria',
     },
   })
