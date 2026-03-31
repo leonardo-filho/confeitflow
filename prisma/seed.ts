@@ -1,12 +1,12 @@
 import { PrismaClient } from '@prisma/client'
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
 import bcrypt from 'bcryptjs'
-import path from 'path'
 
-const dbUrl = (process.env.DATABASE_URL || 'file:./dev.db').replace('file:', '')
-const absolutePath = path.isAbsolute(dbUrl) ? dbUrl : path.resolve(process.cwd(), dbUrl)
-const adapter = new PrismaBetterSqlite3({ url: absolutePath })
-const prisma = new PrismaClient({ adapter, errorFormat: 'minimal' })
+const connectionString = process.env.DATABASE_URL!
+const pool = new Pool({ connectionString })
+const adapter = new PrismaPg(pool)
+const prisma = new PrismaClient({ adapter })
 
 async function main() {
   console.log('Iniciando seed...')

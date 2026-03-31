@@ -111,9 +111,8 @@ export default async function FinanceiroPage() {
                 </p>
                 {lastMonthRevenue > 0 && (
                   <p
-                    className={`text-xs mt-1 ${
-                      revenueChange >= 0 ? 'text-green-600' : 'text-red-600'
-                    }`}
+                    className={`text-xs mt-1 ${revenueChange >= 0 ? 'text-green-600' : 'text-red-600'
+                      }`}
                   >
                     {revenueChange >= 0 ? '↑' : '↓'}{' '}
                     {Math.abs(revenueChange).toFixed(1)}% vs mês anterior
@@ -222,7 +221,7 @@ export default async function FinanceiroPage() {
                         </Link>
                       </td>
                       <td className="py-2">
-                        {p.cliente.nome} {p.cliente.sobrenome}
+                        {p.cliente ? `${p.cliente.nome} ${p.cliente.sobrenome}` : 'Sem cliente'}
                       </td>
                       <td className="py-2 hidden md:table-cell text-muted-foreground">
                         {formatDate(p.dataEntrega)}

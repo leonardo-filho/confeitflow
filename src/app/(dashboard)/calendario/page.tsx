@@ -152,7 +152,7 @@ export default async function CalendarioPage({
                       key={p.id}
                       href={`/pedidos/${p.id}`}
                       className="flex items-center gap-1 rounded text-xs px-1 py-0.5 hover:bg-muted transition-colors truncate"
-                      title={`#${p.numero} ${p.cliente.nome} ${p.cliente.sobrenome}`}
+                      title={`#${p.numero} ${p.cliente?.nome ?? 'Sem cliente'} ${p.cliente?.sobrenome ?? ''}`}
                     >
                       <span
                         className={cn(
@@ -161,7 +161,7 @@ export default async function CalendarioPage({
                         )}
                       />
                       <span className="truncate">
-                        #{p.numero} {p.cliente.nome}
+                        #{p.numero} {p.cliente?.nome ?? 'Sem cliente'}
                       </span>
                     </Link>
                   ))}

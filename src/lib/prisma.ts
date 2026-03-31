@@ -1,17 +1,15 @@
 import 'server-only'
 import { PrismaClient } from '@prisma/client'
-import { PrismaBetterSqlite3 } from '@prisma/adapter-better-sqlite3'
+import { PrismaPg } from '@prisma/adapter-pg'
+import { Pool } from 'pg'
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 
 function createPrismaClient() {
-  // DATABASE_URL should be an absolute path or relative to the project root
-  const dbPath = process.env.DATABASE_URL?.replace('file:./', '')
-    || process.env.DATABASE_URL?.replace('file:', '')
-    || 'dev.db'
-
-  const adapter = new PrismaBetterSqlite3({ url: dbPath })
-  return new PrismaClient({ adapter, errorFormat: 'minimal' })
+    const connectionString = process.env.DATABASE_URL!
+    const pool = new Pool({ connectionString })
+    const adapter = new PrismaPg(pool)
+    return new PrismaClient({ adapter })
 }
 
 export const prisma = globalForPrisma.prisma || createPrismaClient()

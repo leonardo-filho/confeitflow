@@ -224,8 +224,7 @@ export default async function DashboardPage() {
                     >
                       <div>
                         <p className="text-sm font-medium">
-                          #{order.numero} — {order.cliente.nome}{' '}
-                          {order.cliente.sobrenome}
+                          #{order.numero} — {order.cliente ? `${order.cliente.nome} ${order.cliente.sobrenome}` : 'Sem cliente'}
                         </p>
                         <p className="text-xs text-muted-foreground">
                           Entrega: {formatDate(order.dataEntrega)}
