@@ -1,6 +1,7 @@
 import NextAuth from 'next-auth'
 import { PrismaAdapter } from '@auth/prisma-adapter'
 import Credentials from 'next-auth/providers/credentials'
+import bcrypt from 'bcryptjs'
 import { prisma } from './prisma'
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -9,9 +10,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   pages: { signIn: '/login' },
   callbacks: {
     jwt({ token, user }) {
-      if (user) {
-        token.id = user.id
-      }
+      if (user) token.id = user.id
       return token
     },
     session({ session, token }) {
@@ -31,7 +30,13 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
           where: { email: credentials.email as string },
         })
         if (!user || !user.password) return null
-        const valid = credentials.password === user.password
+        // Support both hashed passwords (new) and plain text (legacy/seed)
+        let valid = false
+        if (user.password.startsWith('$2')) {
+          valid = await bcrypt.compare(credentials.password as string, user.password)
+        } else {
+          valid = credentials.password === user.password
+        }
         if (!valid) return null
         return user
       },

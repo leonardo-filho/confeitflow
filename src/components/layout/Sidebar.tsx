@@ -10,7 +10,6 @@ import {
   Calendar,
   TrendingUp,
   Settings,
-  Sparkles,
 } from 'lucide-react'
 import { cn } from '@/lib/utils'
 
@@ -56,18 +55,23 @@ export default function Sidebar({ user }: SidebarProps) {
   return (
     <aside className="hidden md:flex flex-col w-64 h-screen sticky top-0 shrink-0 gradient-sidebar text-sidebar-foreground">
       {/* Logo */}
-      <div className="p-6 border-b border-white/5">
-        <div className="flex items-center gap-2">
-          <div className="h-8 w-8 rounded-lg gradient-primary flex items-center justify-center shadow-glow">
-            <Sparkles className="h-4 w-4 text-white" aria-hidden="true" />
+      <div className="px-5 py-4 border-b border-white/5">
+        <Link href="/dashboard" className="flex items-center gap-2.5">
+          <div className="h-9 w-9 rounded-xl overflow-hidden shrink-0 shadow-glow">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo.jpg"
+              alt="ConfeitFlow"
+              className="w-full h-full object-cover"
+            />
           </div>
           <span
-            className="text-xl font-bold text-white"
+            className="text-xl font-bold text-white tracking-tight"
             style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
           >
             ConfeitFlow
           </span>
-        </div>
+        </Link>
       </div>
 
       {/* Main Navigation */}

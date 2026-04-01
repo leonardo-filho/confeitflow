@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { ChevronDown, LogOut, Settings } from 'lucide-react'
+import { signOutAction } from '@/app/actions/auth'
 
 interface HeaderProps {
   user: {
@@ -54,23 +55,27 @@ export default function Header({ user }: HeaderProps) {
   const pathname = usePathname()
   const title = getPageTitle(pathname)
 
-  function handleSignOut() {
-    const form = document.createElement('form')
-    form.method = 'POST'
-    form.action = '/api/auth/signout'
-    document.body.appendChild(form)
-    form.submit()
-  }
-
   return (
     <header className="sticky top-0 z-30 flex h-16 items-center justify-between border-b bg-background/80 backdrop-blur-md px-4 md:px-6 transition-all">
-      <div className="flex items-center gap-4">
-        <span
-          className="text-xl font-bold text-primary md:hidden"
-          style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
-        >
-          ConfeitFlow
-        </span>
+      <div className="flex items-center gap-3">
+        {/* Mobile: show logo + brand */}
+        <div className="flex items-center gap-2 md:hidden">
+          <div className="h-7 w-7 rounded-lg overflow-hidden shrink-0">
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/brand/logo.jpg"
+              alt="ConfeitFlow"
+              className="w-full h-full object-cover"
+            />
+          </div>
+          <span
+            className="text-lg font-bold text-primary"
+            style={{ fontFamily: "'Playfair Display', Georgia, serif" }}
+          >
+            ConfeitFlow
+          </span>
+        </div>
+        {/* Desktop: show current page title */}
         <h1 className="hidden md:block text-lg font-semibold text-foreground">
           {title}
         </h1>
@@ -104,9 +109,16 @@ export default function Header({ user }: HeaderProps) {
             </a>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={handleSignOut} className="text-destructive focus:text-destructive">
-            <LogOut className="h-4 w-4 mr-2" aria-hidden="true" />
-            Sair
+          <DropdownMenuItem className="p-0">
+            <form action={signOutAction} className="w-full">
+              <button
+                type="submit"
+                className="flex w-full items-center gap-2 px-2 py-1.5 text-sm text-destructive cursor-pointer"
+              >
+                <LogOut className="h-4 w-4" aria-hidden="true" />
+                Sair
+              </button>
+            </form>
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

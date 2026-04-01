@@ -25,7 +25,7 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
-    const { nome, preco, categoriaId, descricao, custoEstimado, tempoProducao, ativo } = body
+    const { nome, preco, categoriaId, descricao, custoEstimado, tempoProducao, ativo, imagem } = body
 
     if (!nome || preco === undefined) {
       return Response.json(
@@ -43,13 +43,20 @@ export async function POST(request: NextRequest) {
         custoEstimado: custoEstimado || null,
         tempoProducao: tempoProducao || null,
         ativo: ativo !== false,
+        imagem: imagem || null,
         userId: session.user.id,
       },
     })
 
     return Response.json(produto, { status: 201 })
-  } catch (error) {
+  } catch (error: unknown) {
     console.error(error)
+    if (error && typeof error === 'object' && 'code' in error && error.code === 'P2003') {
+      return Response.json(
+        { error: 'Sessão inválida. Faça logout e entre novamente.' },
+        { status: 401 }
+      )
+    }
     return Response.json({ error: 'Erro ao criar produto' }, { status: 500 })
   }
 }

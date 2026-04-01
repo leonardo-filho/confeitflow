@@ -19,12 +19,13 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  clientes   Cliente[]
-  pedidos    Pedido[]
-  produtos   Produto[]
-  categorias Categoria[]
-  accounts   Account[]
-  sessions   Session[]
+  clientes     Cliente[]
+  pedidos      Pedido[]
+  produtos     Produto[]
+  categorias   Categoria[]
+  ingredientes Ingrediente[]
+  accounts     Account[]
+  sessions     Session[]
 }
 
 model Account {
@@ -115,13 +116,44 @@ model Produto {
   updatedAt DateTime @updatedAt
 
   categoriaId String?
-  categoria   Categoria?   @relation(fields: [categoriaId], references: [id])
+  categoria   Categoria?     @relation(fields: [categoriaId], references: [id])
   userId      String
-  user        User         @relation(fields: [userId], references: [id])
+  user        User           @relation(fields: [userId], references: [id])
   itensPedido ItemPedido[]
+  receita     ReceitaProduto[]
 
   @@index([userId])
   @@index([categoriaId])
+}
+
+model Ingrediente {
+  id            String  @id @default(cuid())
+  nome          String
+  unidade       String  @default("un")
+  estoqueAtual  Float   @default(0)
+  estoqueMinimo Float   @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId  String
+  user    User             @relation(fields: [userId], references: [id])
+  receita ReceitaProduto[]
+
+  @@index([userId])
+}
+
+model ReceitaProduto {
+  id         String @id @default(cuid())
+  quantidade Float
+
+  produtoId     String
+  produto       Produto     @relation(fields: [produtoId], references: [id], onDelete: Cascade)
+  ingredienteId String
+  ingrediente   Ingrediente @relation(fields: [ingredienteId], references: [id], onDelete: Cascade)
+
+  @@unique([produtoId, ingredienteId])
+  @@index([produtoId])
 }
 
 model Pedido {
