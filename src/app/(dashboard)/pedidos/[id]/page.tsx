@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
 import { StatusBadge } from '@/components/ui/status-badge'
 import { UpdatePedidoButton } from '@/components/pedidos/UpdatePedidoButton'
+import { ListaCompras } from '@/components/pedidos/ListaCompras'
 import {
   formatDate,
   formatCurrency,
@@ -197,6 +198,9 @@ export default async function PedidoDetailPage({
               </div>
             </CardContent>
           </Card>
+
+          {/* Lista de Compras */}
+          <ListaCompras pedidoId={pedido.id} />
 
           {/* Specifications */}
           {(pedido.especificacoes || pedido.observacoesInternas) && (
