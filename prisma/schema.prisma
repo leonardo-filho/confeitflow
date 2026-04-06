@@ -189,8 +189,9 @@ model Pedido {
   cliente   Cliente?          @relation(fields: [clienteId], references: [id])
   userId    String
   user      User              @relation(fields: [userId], references: [id])
-  itens     ItemPedido[]
-  historico HistoricoPedido[]
+  itens        ItemPedido[]
+  historico    HistoricoPedido[]
+  listaCompras ItemListaCompras[]
 
   @@index([userId])
   @@index([clienteId])
@@ -240,6 +241,21 @@ enum TipoEntrega {
   RETIRADA
   ENTREGA
   ENVIO
+}
+
+model ItemListaCompras {
+  id         String  @id @default(cuid())
+  nome       String
+  quantidade Float   @default(1)
+  unidade    String  @default("un")
+  comprado   Boolean @default(false)
+
+  pedidoId String
+  pedido   Pedido @relation(fields: [pedidoId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+
+  @@index([pedidoId])
 }
 
 enum StatusPagamento {

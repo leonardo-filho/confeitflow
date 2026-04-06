@@ -78,7 +78,7 @@ export default function NovoProdutoPage() {
       categoriaId: (formData.get('categoriaId') as string) || null,
       descricao: (formData.get('descricao') as string) || null,
       custoEstimado: parseFloat(formData.get('custoEstimado') as string) || null,
-      tempoProducao: parseInt(formData.get('tempoProducao') as string) || null,
+
       ativo,
       imagem,
     }
@@ -189,24 +189,18 @@ export default function NovoProdutoPage() {
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4">
-              <div className="space-y-2">
-                <Label htmlFor="categoriaId">Categoria</Label>
-                <select
-                  id="categoriaId"
-                  name="categoriaId"
-                  className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-                >
-                  <option value="">Sem categoria</option>
-                  {categorias.map((c) => (
-                    <option key={c.id} value={c.id}>{c.nome}</option>
-                  ))}
-                </select>
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="tempoProducao">Tempo de produção (horas)</Label>
-                <Input id="tempoProducao" name="tempoProducao" type="number" min="0" placeholder="Ex: 4" />
-              </div>
+            <div className="space-y-2">
+              <Label htmlFor="categoriaId">Categoria</Label>
+              <select
+                id="categoriaId"
+                name="categoriaId"
+                className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+              >
+                <option value="">Sem categoria</option>
+                {categorias.map((c) => (
+                  <option key={c.id} value={c.id}>{c.nome}</option>
+                ))}
+              </select>
             </div>
 
             <div className="space-y-2">
